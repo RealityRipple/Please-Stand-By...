@@ -1,16 +1,25 @@
 ﻿Imports System.Runtime.InteropServices
 Imports IWshRuntimeLibrary
 Public Class frmMain
-  <DllImport("user32.dll", SetLastError:=True, CharSet:=CharSet.Unicode)>
+  <DllImport("user32", SetLastError:=True, CharSet:=CharSet.Unicode)>
   Private Shared Function PostMessage(ByVal hWnd As IntPtr, ByVal wMsg As Integer, ByVal wParam As Integer, ByVal lParam As Integer) As Integer
   End Function
 
-  <DllImport("user32.dll", SetLastError:=True, CharSet:=CharSet.Unicode)>
+  <DllImport("user32", SetLastError:=True, CharSet:=CharSet.Unicode)>
   Private Shared Function RegisterHotKey(ByVal hwnd As IntPtr, ByVal id As Integer, ByVal fsModifiers As Integer, ByVal vk As Integer) As Boolean
   End Function
 
-  <DllImport("user32.dll", SetLastError:=True, CharSet:=CharSet.Unicode)>
+  <DllImport("user32", SetLastError:=True, CharSet:=CharSet.Unicode)>
   Private Shared Function UnregisterHotKey(ByVal hwnd As IntPtr, ByVal id As Integer) As Boolean
+  End Function
+
+  <StructLayout(LayoutKind.Sequential)>
+  Private Structure LASTINPUTINFO
+    Public cbSize As UInteger
+    Public dwTime As UInteger
+  End Structure
+  <DllImport("user32", setlasterror:=True, CharSet:=CharSet.Unicode)>
+  Private Shared Function GetLastInputInfo(ByRef inputInfo As LASTINPUTINFO) As Boolean
   End Function
 
   Private Enum MOD_
@@ -67,11 +76,11 @@ Public Class frmMain
   End Sub
 
   Private Sub mnuStandby_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles mnuStandby.Click
-    PostMessage(Me.Handle, &H112&, &HF170&, 2)
+    WaitForIdle()
   End Sub
 
   Private Sub trayStandBy_MouseUp(ByVal sender As Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles trayStandBy.MouseUp
-    If e.Button = Windows.Forms.MouseButtons.Left Then PostMessage(Me.Handle, &H112&, &HF170&, 2)
+    If e.Button = Windows.Forms.MouseButtons.Left Then WaitForIdle()
   End Sub
 
   Public Sub CreateShortCut()
@@ -131,10 +140,39 @@ Public Class frmMain
   Protected Overrides Sub WndProc(ByRef m As System.Windows.Forms.Message)
     If m.Msg = &H312 Then
       If m.WParam.ToInt32 = 1 Then
-        PostMessage(Me.Handle, &H112&, &HF170&, 2)
+        WaitForIdle()
       End If
     End If
     MyBase.WndProc(m)
+  End Sub
+
+  Private WaitStart As Integer
+  Private Sub WaitForIdle()
+    SyncLock tmrIdle
+      If tmrIdle.Enabled Then tmrIdle.Stop()
+      WaitStart = Environment.TickCount
+      tmrIdle.Start()
+    End SyncLock
+  End Sub
+
+  Private Sub tmrIdle_Tick(sender As System.Object, e As System.EventArgs) Handles tmrIdle.Tick
+    tmrIdle.Stop()
+    Dim inInfo As New LASTINPUTINFO
+    inInfo.cbSize = Marshal.SizeOf(inInfo)
+    If GetLastInputInfo(inInfo) Then
+      Dim lastTime As UInteger = CUInt(Environment.TickCount) - inInfo.dwTime
+      If lastTime > 5000 Then
+        MonitorStandby()
+      Else
+        If (lastTime > 500) Or (Environment.TickCount - WaitStart < 15000) Then tmrIdle.Start()
+      End If
+    Else
+      MonitorStandby()
+    End If
+  End Sub
+
+  Private Sub MonitorStandby()
+    PostMessage(Me.Handle, &H112&, &HF170&, 2)
   End Sub
 
   Private Sub mnuShortcutDisabled_Click(sender As System.Object, e As System.EventArgs) Handles mnuShortcutDisabled.Click
