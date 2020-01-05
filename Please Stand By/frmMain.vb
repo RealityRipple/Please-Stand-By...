@@ -30,6 +30,12 @@ Public Class frmMain
     NoRepeat = &H4000
   End Enum
 
+  Private Function GetTickCount() As UInt64
+    Dim tCount As Integer = Environment.TickCount
+    If tCount > 0 Then Return tCount
+    Return CULng(CLng(tCount) + CLng(UInt32.MaxValue + 1))
+  End Function
+
   Private Sub tmrHide_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles tmrHide.Tick
     tmrHide.Enabled = False
     Me.Hide()
@@ -160,7 +166,9 @@ Public Class frmMain
     Dim inInfo As New LASTINPUTINFO
     inInfo.cbSize = Marshal.SizeOf(inInfo)
     If GetLastInputInfo(inInfo) Then
-      Dim lastTime As UInteger = CUInt(Environment.TickCount) - inInfo.dwTime
+      Dim tickTime As ULong = GetTickCount()
+      Dim lastTime As ULong = 0
+      If tickTime > inInfo.dwTime Then lastTime = tickTime - inInfo.dwTime
       If lastTime > 5000 Then
         MonitorStandby()
       Else
