@@ -60,6 +60,49 @@ Namespace My.Resources
             End Set
         End Property
         
+        '''<summary>
+        '''  Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        '''</summary>
+        Friend ReadOnly Property ico0() As System.Drawing.Icon
+            Get
+                Dim obj As Object = ResourceManager.GetObject("ico0", resourceCulture)
+                Return CType(obj,System.Drawing.Icon)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        '''</summary>
+        Friend ReadOnly Property ico1() As System.Drawing.Icon
+            Get
+                Dim obj As Object = ResourceManager.GetObject("ico1", resourceCulture)
+                Return CType(obj,System.Drawing.Icon)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        '''</summary>
+        Friend ReadOnly Property ico2() As System.Drawing.Icon
+            Get
+                Dim obj As Object = ResourceManager.GetObject("ico2", resourceCulture)
+                Return CType(obj,System.Drawing.Icon)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        '''</summary>
+        Friend ReadOnly Property ico3() As System.Drawing.Icon
+            Get
+                Dim obj As Object = ResourceManager.GetObject("ico3", resourceCulture)
+                Return CType(obj,System.Drawing.Icon)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        '''</summary>
         Friend ReadOnly Property icon() As System.Drawing.Icon
             Get
                 Dim obj As Object = ResourceManager.GetObject("icon", resourceCulture)

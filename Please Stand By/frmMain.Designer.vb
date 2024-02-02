@@ -165,7 +165,7 @@ Partial Class frmMain
     '
     'tmrIdle
     '
-    Me.tmrIdle.Interval = 500
+    Me.tmrIdle.Interval = 250
     '
     'frmMain
     '

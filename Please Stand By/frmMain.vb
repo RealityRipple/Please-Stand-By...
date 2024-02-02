@@ -156,6 +156,7 @@ Public Class frmMain
   Private Sub WaitForIdle()
     SyncLock tmrIdle
       If tmrIdle.Enabled Then tmrIdle.Stop()
+      trayStandBy.Icon = My.Resources.ico0
       WaitStart = Environment.TickCount
       tmrIdle.Start()
     End SyncLock
@@ -165,18 +166,32 @@ Public Class frmMain
     tmrIdle.Stop()
     Dim inInfo As New LASTINPUTINFO
     inInfo.cbSize = Marshal.SizeOf(inInfo)
-    If GetLastInputInfo(inInfo) Then
-      Dim tickTime As ULong = GetTickCount()
-      Dim lastTime As ULong = 0
-      If tickTime > inInfo.dwTime Then lastTime = tickTime - inInfo.dwTime
-      If lastTime > 5000 Then
-        MonitorStandby()
-      Else
-        If (lastTime > 500) Or (Environment.TickCount - WaitStart < 15000) Then tmrIdle.Start()
-      End If
-    Else
+    If Not GetLastInputInfo(inInfo) Then
       MonitorStandby()
+      Return
     End If
+    Dim tickTime As ULong = GetTickCount()
+    Dim lastTime As ULong = 0
+    If tickTime > inInfo.dwTime Then lastTime = tickTime - inInfo.dwTime
+    If lastTime > 5000 Then
+      trayStandBy.Icon = My.Resources.icon
+      MonitorStandby()
+      Return
+    End If
+    If lastTime < 500 AndAlso Environment.TickCount - WaitStart > 15000 Then
+      trayStandBy.Icon = My.Resources.icon
+      Return
+    End If
+    If lastTime > 4000 Then
+      trayStandBy.Icon = My.Resources.ico1
+    ElseIf lastTime > 3000 Then
+      trayStandBy.Icon = My.Resources.ico2
+    ElseIf lastTime > 2000 Then
+      trayStandBy.Icon = My.Resources.ico3
+    Else
+      trayStandBy.Icon = My.Resources.ico0
+    End If
+    tmrIdle.Start()
   End Sub
 
   Private Sub MonitorStandby()
