@@ -56,6 +56,7 @@ Public Class frmMain
     Me.Hide()
     ApplyHotkey()
     SetTrayText()
+    DisableTrayMenus()
   End Sub
 
   Private Sub mnuExit_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles mnuExit.Click
@@ -104,6 +105,9 @@ Public Class frmMain
       End If
     End If
     MyBase.WndProc(m)
+    If m.Msg = &HC083 Then
+      DisableTrayMenus()
+    End If
   End Sub
 
   Private WaitStart As Integer
@@ -296,6 +300,42 @@ Public Class frmMain
         Case Else : mnuShortcutDisabled.Checked = True
       End Select
     End Using
+  End Sub
+
+  Private Sub DisableTrayMenus()
+    Dim activeKey As UInt32 = GetRegKey(False).GetValue("KeyboardShortcut", 0)
+    For I As Byte = 1 To 10
+      Dim hotKeyd As Boolean = False
+      If I = activeKey Then
+        hotKeyd = True
+      Else
+        Select Case I
+          Case 1 : hotKeyd = RegisterHotKey(Me.Handle, 2, MOD_.Control Or MOD_.Alt Or MOD_.NoRepeat, Keys.D)
+          Case 2 : hotKeyd = RegisterHotKey(Me.Handle, 2, MOD_.Control Or MOD_.Alt Or MOD_.NoRepeat, Keys.M)
+          Case 3 : hotKeyd = RegisterHotKey(Me.Handle, 2, MOD_.Control Or MOD_.Alt Or MOD_.NoRepeat, Keys.S)
+          Case 4 : hotKeyd = RegisterHotKey(Me.Handle, 2, MOD_.Control Or MOD_.Alt Or MOD_.NoRepeat, Keys.V)
+          Case 5 : hotKeyd = RegisterHotKey(Me.Handle, 2, MOD_.Alt Or MOD_.Shift Or MOD_.NoRepeat, Keys.D)
+          Case 6 : hotKeyd = RegisterHotKey(Me.Handle, 2, MOD_.Alt Or MOD_.Shift Or MOD_.NoRepeat, Keys.M)
+          Case 7 : hotKeyd = RegisterHotKey(Me.Handle, 2, MOD_.Alt Or MOD_.Shift Or MOD_.NoRepeat, Keys.S)
+          Case 8 : hotKeyd = RegisterHotKey(Me.Handle, 2, MOD_.Alt Or MOD_.Shift Or MOD_.NoRepeat, Keys.V)
+          Case 9 : hotKeyd = RegisterHotKey(Me.Handle, 2, MOD_.Win Or MOD_.NoRepeat, Keys.S)
+          Case 10 : hotKeyd = RegisterHotKey(Me.Handle, 2, MOD_.Win Or MOD_.NoRepeat, Keys.V)
+        End Select
+        UnregisterHotKey(Me.Handle, 2)
+      End If
+      Select Case I
+        Case 1 : mnuShortcutCAD.Enabled = hotKeyd
+        Case 2 : mnuShortcutCAM.Enabled = hotKeyd
+        Case 3 : mnuShortcutCAS.Enabled = hotKeyd
+        Case 4 : mnuShortcutCAV.Enabled = hotKeyd
+        Case 5 : mnuShortcutASD.Enabled = hotKeyd
+        Case 6 : mnuShortcutASM.Enabled = hotKeyd
+        Case 7 : mnuShortcutASS.Enabled = hotKeyd
+        Case 8 : mnuShortcutASV.Enabled = hotKeyd
+        Case 9 : mnuShortcutWS.Enabled = hotKeyd
+        Case 10 : mnuShortcutWV.Enabled = hotKeyd
+      End Select
+    Next
   End Sub
 
   Private Sub SetNotifyIconText(ni As NotifyIcon, text As String)
