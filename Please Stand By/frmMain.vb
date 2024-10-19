@@ -4,15 +4,12 @@ Public Class frmMain
   <DllImport("user32", SetLastError:=True, CharSet:=CharSet.Unicode)>
   Private Shared Function PostMessage(ByVal hWnd As IntPtr, ByVal wMsg As Integer, ByVal wParam As Integer, ByVal lParam As Integer) As Integer
   End Function
-
   <DllImport("user32", SetLastError:=True, CharSet:=CharSet.Unicode)>
   Private Shared Function RegisterHotKey(ByVal hwnd As IntPtr, ByVal id As Integer, ByVal fsModifiers As Integer, ByVal vk As Integer) As Boolean
   End Function
-
   <DllImport("user32", SetLastError:=True, CharSet:=CharSet.Unicode)>
   Private Shared Function UnregisterHotKey(ByVal hwnd As IntPtr, ByVal id As Integer) As Boolean
   End Function
-
   <StructLayout(LayoutKind.Sequential)>
   Private Structure LASTINPUTINFO
     Public cbSize As UInteger
@@ -21,7 +18,6 @@ Public Class frmMain
   <DllImport("user32", setlasterror:=True, CharSet:=CharSet.Unicode)>
   Private Shared Function GetLastInputInfo(ByRef inputInfo As LASTINPUTINFO) As Boolean
   End Function
-
   Private Enum MOD_
     Alt = &H1
     Control = &H2
@@ -29,13 +25,11 @@ Public Class frmMain
     Win = &H8
     NoRepeat = &H4000
   End Enum
-
   Private Function GetTickCount() As UInt64
     Dim tCount As Integer = Environment.TickCount
     If tCount > 0 Then Return tCount
     Return CULng(CLng(tCount) + CLng(UInt32.MaxValue + 1))
   End Function
-
   Private Function GetRegKey(ByVal WriteEnabled As Boolean) As Microsoft.Win32.RegistryKey
     If WriteEnabled Then
       If Not My.Computer.Registry.CurrentUser.OpenSubKey("Software").GetSubKeyNames.Contains(Application.CompanyName) Then My.Computer.Registry.CurrentUser.OpenSubKey("Software", True).CreateSubKey(Application.CompanyName)
@@ -50,7 +44,6 @@ Public Class frmMain
       Return Nothing
     End If
   End Function
-
   Private Sub tmrHide_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles tmrHide.Tick
     tmrHide.Enabled = False
     Me.Hide()
@@ -58,19 +51,15 @@ Public Class frmMain
     SetTrayText()
     DisableTrayMenus()
   End Sub
-
   Private Sub mnuExit_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles mnuExit.Click
     Application.Exit()
   End Sub
-
   Private Sub mnuStandby_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles mnuStandby.Click
     WaitForIdle()
   End Sub
-
   Private Sub trayStandBy_MouseUp(ByVal sender As Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles trayStandBy.MouseUp
     If e.Button = Windows.Forms.MouseButtons.Left Then WaitForIdle()
   End Sub
-
   Public Sub CreateShortCut()
     Dim shell As New WshShell
     Dim shortCut As IWshRuntimeLibrary.IWshShortcut
@@ -84,7 +73,6 @@ Public Class frmMain
       .Save()
     End With
   End Sub
-
   Private Sub mnuStartUp_Click(sender As Object, e As System.EventArgs) Handles mnuStartUp.Click
     If Not My.Computer.FileSystem.FileExists(My.Computer.FileSystem.SpecialDirectories.Programs & "\Startup\Please Stand By.lnk") Then
       CreateShortCut()
@@ -92,12 +80,10 @@ Public Class frmMain
       If My.Computer.FileSystem.FileExists(My.Computer.FileSystem.SpecialDirectories.Programs & "\Startup\Please Stand By.lnk") Then My.Computer.FileSystem.DeleteFile(My.Computer.FileSystem.SpecialDirectories.Programs & "\Startup\Please Stand By.lnk")
     End If
   End Sub
-
   Private Sub mnuTray_Popup(sender As System.Object, e As EventArgs) Handles mnuTray.Popup
     mnuStartUp.Checked = My.Computer.FileSystem.FileExists(My.Computer.FileSystem.SpecialDirectories.Programs & "\Startup\Please Stand By.lnk")
     SetTrayMenus()
   End Sub
-
   Protected Overrides Sub WndProc(ByRef m As System.Windows.Forms.Message)
     If m.Msg = &H312 Then
       If m.WParam.ToInt32 = 1 Then
@@ -109,7 +95,6 @@ Public Class frmMain
       DisableTrayMenus()
     End If
   End Sub
-
   Private WaitStart As Integer
   Private Sub WaitForIdle()
     SyncLock tmrIdle
@@ -119,7 +104,6 @@ Public Class frmMain
       tmrIdle.Start()
     End SyncLock
   End Sub
-
   Private Sub tmrIdle_Tick(sender As System.Object, e As System.EventArgs) Handles tmrIdle.Tick
     tmrIdle.Stop()
     Dim inInfo As New LASTINPUTINFO
@@ -151,87 +135,74 @@ Public Class frmMain
     End If
     tmrIdle.Start()
   End Sub
-
   Private Sub MonitorStandby()
     PostMessage(Me.Handle, &H112&, &HF170&, 2)
   End Sub
-
   Private Sub mnuShortcutDisabled_Click(sender As System.Object, e As System.EventArgs) Handles mnuShortcutDisabled.Click
     GetRegKey(True).DeleteValue("KeyboardShortcut")
     UnregisterHotKey(Me.Handle, 1)
     SetTrayText()
   End Sub
-
   Private Sub mnuShortcutCAD_Click(sender As System.Object, e As System.EventArgs) Handles mnuShortcutCAD.Click
     GetRegKey(True).SetValue("KeyboardShortcut", 1, Microsoft.Win32.RegistryValueKind.DWord)
     UnregisterHotKey(Me.Handle, 1)
     If Not ApplyHotkey() Then MsgBox("The Keyboard Shortcut ""Ctrl+Alt+D"" is already in use!" & vbNewLine & "Please select a different Keyboard Shortcut to use with Please Stand By...", MsgBoxStyle.Exclamation Or MsgBoxStyle.SystemModal, "Please Stand By... Keyboard Shortcut")
     SetTrayText()
   End Sub
-
   Private Sub mnuShortcutCAM_Click(sender As System.Object, e As System.EventArgs) Handles mnuShortcutCAM.Click
     GetRegKey(True).SetValue("KeyboardShortcut", 2, Microsoft.Win32.RegistryValueKind.DWord)
     UnregisterHotKey(Me.Handle, 1)
     If Not ApplyHotkey() Then MsgBox("The Keyboard Shortcut ""Ctrl+Alt+M"" is already in use!" & vbNewLine & "Please select a different Keyboard Shortcut to use with Please Stand By...", MsgBoxStyle.Exclamation Or MsgBoxStyle.SystemModal, "Please Stand By... Keyboard Shortcut")
     SetTrayText()
   End Sub
-
   Private Sub mnuShortcutCAS_Click(sender As System.Object, e As System.EventArgs) Handles mnuShortcutCAS.Click
     GetRegKey(True).SetValue("KeyboardShortcut", 3, Microsoft.Win32.RegistryValueKind.DWord)
     UnregisterHotKey(Me.Handle, 1)
     If Not ApplyHotkey() Then MsgBox("The Keyboard Shortcut ""Ctrl+Alt+S"" is already in use!" & vbNewLine & "Please select a different Keyboard Shortcut to use with Please Stand By...", MsgBoxStyle.Exclamation Or MsgBoxStyle.SystemModal, "Please Stand By... Keyboard Shortcut")
     SetTrayText()
   End Sub
-
   Private Sub mnuShortcutCAV_Click(sender As System.Object, e As System.EventArgs) Handles mnuShortcutCAV.Click
     GetRegKey(True).SetValue("KeyboardShortcut", 4, Microsoft.Win32.RegistryValueKind.DWord)
     UnregisterHotKey(Me.Handle, 1)
     If Not ApplyHotkey() Then MsgBox("The Keyboard Shortcut ""Ctrl+Alt+V"" is already in use!" & vbNewLine & "Please select a different Keyboard Shortcut to use with Please Stand By...", MsgBoxStyle.Exclamation Or MsgBoxStyle.SystemModal, "Please Stand By... Keyboard Shortcut")
     SetTrayText()
   End Sub
-
   Private Sub mnuShortcutASD_Click(sender As System.Object, e As System.EventArgs) Handles mnuShortcutASD.Click
     GetRegKey(True).SetValue("KeyboardShortcut", 5, Microsoft.Win32.RegistryValueKind.DWord)
     UnregisterHotKey(Me.Handle, 1)
     If Not ApplyHotkey() Then MsgBox("The Keyboard Shortcut ""Alt+Shift+D"" is already in use!" & vbNewLine & "Please select a different Keyboard Shortcut to use with Please Stand By...", MsgBoxStyle.Exclamation Or MsgBoxStyle.SystemModal, "Please Stand By... Keyboard Shortcut")
     SetTrayText()
   End Sub
-
   Private Sub mnuShortcutASM_Click(sender As System.Object, e As System.EventArgs) Handles mnuShortcutASM.Click
     GetRegKey(True).SetValue("KeyboardShortcut", 6, Microsoft.Win32.RegistryValueKind.DWord)
     UnregisterHotKey(Me.Handle, 1)
     If Not ApplyHotkey() Then MsgBox("The Keyboard Shortcut ""Alt+Shift+M"" is already in use!" & vbNewLine & "Please select a different Keyboard Shortcut to use with Please Stand By...", MsgBoxStyle.Exclamation Or MsgBoxStyle.SystemModal, "Please Stand By... Keyboard Shortcut")
     SetTrayText()
   End Sub
-
   Private Sub mnuShortcutASS_Click(sender As System.Object, e As System.EventArgs) Handles mnuShortcutASS.Click
     GetRegKey(True).SetValue("KeyboardShortcut", 7, Microsoft.Win32.RegistryValueKind.DWord)
     UnregisterHotKey(Me.Handle, 1)
     If Not ApplyHotkey() Then MsgBox("The Keyboard Shortcut ""Alt+Shift+S"" is already in use!" & vbNewLine & "Please select a different Keyboard Shortcut to use with Please Stand By...", MsgBoxStyle.Exclamation Or MsgBoxStyle.SystemModal, "Please Stand By... Keyboard Shortcut")
     SetTrayText()
   End Sub
-
   Private Sub mnuShortcutASV_Click(sender As System.Object, e As System.EventArgs) Handles mnuShortcutASV.Click
     GetRegKey(True).SetValue("KeyboardShortcut", 8, Microsoft.Win32.RegistryValueKind.DWord)
     UnregisterHotKey(Me.Handle, 1)
     If Not ApplyHotkey() Then MsgBox("The Keyboard Shortcut ""Alt+Shift+V"" is already in use!" & vbNewLine & "Please select a different Keyboard Shortcut to use with Please Stand By...", MsgBoxStyle.Exclamation Or MsgBoxStyle.SystemModal, "Please Stand By... Keyboard Shortcut")
     SetTrayText()
   End Sub
-
   Private Sub mnuShortcutWS_Click(sender As System.Object, e As System.EventArgs) Handles mnuShortcutWS.Click
     GetRegKey(True).SetValue("KeyboardShortcut", 9, Microsoft.Win32.RegistryValueKind.DWord)
     UnregisterHotKey(Me.Handle, 1)
     If Not ApplyHotkey() Then MsgBox("The Keyboard Shortcut ""Win+S"" is already in use!" & vbNewLine & "Please select a different Keyboard Shortcut to use with Please Stand By...", MsgBoxStyle.Exclamation Or MsgBoxStyle.SystemModal, "Please Stand By... Keyboard Shortcut")
     SetTrayText()
   End Sub
-
   Private Sub mnuShortcutWV_Click(sender As System.Object, e As System.EventArgs) Handles mnuShortcutWV.Click
     GetRegKey(True).SetValue("KeyboardShortcut", 10, Microsoft.Win32.RegistryValueKind.DWord)
     UnregisterHotKey(Me.Handle, 1)
     If Not ApplyHotkey() Then MsgBox("The Keyboard Shortcut ""Win+V"" is already in use!" & vbNewLine & "Please select a different Keyboard Shortcut to use with Please Stand By...", MsgBoxStyle.Exclamation Or MsgBoxStyle.SystemModal, "Please Stand By... Keyboard Shortcut")
     SetTrayText()
   End Sub
-
   Private Function ApplyHotkey() As Boolean
     Using myRegKey As Microsoft.Win32.RegistryKey = GetRegKey(True)
       If Not myRegKey.GetValueNames.Contains("KeyboardShortcut") Then Return False
@@ -253,7 +224,6 @@ Public Class frmMain
     End Using
     Return False
   End Function
-
   Private Sub SetTrayText()
     Dim sTrayText As String = "Left Click: Monitor Standby" & vbNewLine & "Right Click: Menu"
     Using myRegKey As Microsoft.Win32.RegistryKey = GetRegKey(False)
@@ -272,7 +242,6 @@ Public Class frmMain
       End Select
     End Using
   End Sub
-
   Private Sub SetTrayMenus()
     mnuShortcutDisabled.Checked = False
     mnuShortcutASD.Checked = False
@@ -301,7 +270,6 @@ Public Class frmMain
       End Select
     End Using
   End Sub
-
   Private Sub DisableTrayMenus()
     Dim activeKey As UInt32 = GetRegKey(False).GetValue("KeyboardShortcut", 0)
     For I As Byte = 1 To 10
@@ -337,7 +305,6 @@ Public Class frmMain
       End Select
     Next
   End Sub
-
   Private Sub SetNotifyIconText(ni As NotifyIcon, text As String)
     If text.Length >= 128 Then text = text.Substring(0, 124) & "..."
     Dim t As Type = GetType(NotifyIcon)
