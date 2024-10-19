@@ -180,61 +180,61 @@ Public Class frmMain
   Private Sub mnuShortcutCAD_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles mnuShortcutCAD.Click
     GetRegKey(True).SetValue("KeyboardShortcut", 1, Microsoft.Win32.RegistryValueKind.DWord)
     UnregisterHotKey(Me.Handle, 1)
-    If Not ApplyHotkey() Then MsgBox("The Keyboard Shortcut ""Ctrl+Alt+D"" is already in use!" & vbNewLine & "Please select a different Keyboard Shortcut to use with Please Stand By...", MsgBoxStyle.Exclamation Or MsgBoxStyle.SystemModal, "Please Stand By... Keyboard Shortcut")
+    If Not ApplyHotkey() Then MsgBox("The Keyboard Shortcut ""Ctrl+Alt+D"" is already in use!" & vbNewLine & "Please select a different Keyboard Shortcut to use with Please Stand By...", MsgBoxStyle.Exclamation Or MsgBoxStyle.SystemModal, Application.ProductName)
     SetTrayText()
   End Sub
   Private Sub mnuShortcutCAM_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles mnuShortcutCAM.Click
     GetRegKey(True).SetValue("KeyboardShortcut", 2, Microsoft.Win32.RegistryValueKind.DWord)
     UnregisterHotKey(Me.Handle, 1)
-    If Not ApplyHotkey() Then MsgBox("The Keyboard Shortcut ""Ctrl+Alt+M"" is already in use!" & vbNewLine & "Please select a different Keyboard Shortcut to use with Please Stand By...", MsgBoxStyle.Exclamation Or MsgBoxStyle.SystemModal, "Please Stand By... Keyboard Shortcut")
+    If Not ApplyHotkey() Then MsgBox("The Keyboard Shortcut ""Ctrl+Alt+M"" is already in use!" & vbNewLine & "Please select a different Keyboard Shortcut to use with Please Stand By...", MsgBoxStyle.Exclamation Or MsgBoxStyle.SystemModal, Application.ProductName)
     SetTrayText()
   End Sub
   Private Sub mnuShortcutCAS_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles mnuShortcutCAS.Click
     GetRegKey(True).SetValue("KeyboardShortcut", 3, Microsoft.Win32.RegistryValueKind.DWord)
     UnregisterHotKey(Me.Handle, 1)
-    If Not ApplyHotkey() Then MsgBox("The Keyboard Shortcut ""Ctrl+Alt+S"" is already in use!" & vbNewLine & "Please select a different Keyboard Shortcut to use with Please Stand By...", MsgBoxStyle.Exclamation Or MsgBoxStyle.SystemModal, "Please Stand By... Keyboard Shortcut")
+    If Not ApplyHotkey() Then MsgBox("The Keyboard Shortcut ""Ctrl+Alt+S"" is already in use!" & vbNewLine & "Please select a different Keyboard Shortcut to use with Please Stand By...", MsgBoxStyle.Exclamation Or MsgBoxStyle.SystemModal, Application.ProductName)
     SetTrayText()
   End Sub
   Private Sub mnuShortcutCAV_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles mnuShortcutCAV.Click
     GetRegKey(True).SetValue("KeyboardShortcut", 4, Microsoft.Win32.RegistryValueKind.DWord)
     UnregisterHotKey(Me.Handle, 1)
-    If Not ApplyHotkey() Then MsgBox("The Keyboard Shortcut ""Ctrl+Alt+V"" is already in use!" & vbNewLine & "Please select a different Keyboard Shortcut to use with Please Stand By...", MsgBoxStyle.Exclamation Or MsgBoxStyle.SystemModal, "Please Stand By... Keyboard Shortcut")
+    If Not ApplyHotkey() Then MsgBox("The Keyboard Shortcut ""Ctrl+Alt+V"" is already in use!" & vbNewLine & "Please select a different Keyboard Shortcut to use with Please Stand By...", MsgBoxStyle.Exclamation Or MsgBoxStyle.SystemModal, Application.ProductName)
     SetTrayText()
   End Sub
   Private Sub mnuShortcutASD_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles mnuShortcutASD.Click
     GetRegKey(True).SetValue("KeyboardShortcut", 5, Microsoft.Win32.RegistryValueKind.DWord)
     UnregisterHotKey(Me.Handle, 1)
-    If Not ApplyHotkey() Then MsgBox("The Keyboard Shortcut ""Alt+Shift+D"" is already in use!" & vbNewLine & "Please select a different Keyboard Shortcut to use with Please Stand By...", MsgBoxStyle.Exclamation Or MsgBoxStyle.SystemModal, "Please Stand By... Keyboard Shortcut")
+    If Not ApplyHotkey() Then MsgBox("The Keyboard Shortcut ""Alt+Shift+D"" is already in use!" & vbNewLine & "Please select a different Keyboard Shortcut to use with Please Stand By...", MsgBoxStyle.Exclamation Or MsgBoxStyle.SystemModal, Application.ProductName)
     SetTrayText()
   End Sub
   Private Sub mnuShortcutASM_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles mnuShortcutASM.Click
     GetRegKey(True).SetValue("KeyboardShortcut", 6, Microsoft.Win32.RegistryValueKind.DWord)
     UnregisterHotKey(Me.Handle, 1)
-    If Not ApplyHotkey() Then MsgBox("The Keyboard Shortcut ""Alt+Shift+M"" is already in use!" & vbNewLine & "Please select a different Keyboard Shortcut to use with Please Stand By...", MsgBoxStyle.Exclamation Or MsgBoxStyle.SystemModal, "Please Stand By... Keyboard Shortcut")
+    If Not ApplyHotkey() Then MsgBox("The Keyboard Shortcut ""Alt+Shift+M"" is already in use!" & vbNewLine & "Please select a different Keyboard Shortcut to use with Please Stand By...", MsgBoxStyle.Exclamation Or MsgBoxStyle.SystemModal, Application.ProductName)
     SetTrayText()
   End Sub
   Private Sub mnuShortcutASS_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles mnuShortcutASS.Click
     GetRegKey(True).SetValue("KeyboardShortcut", 7, Microsoft.Win32.RegistryValueKind.DWord)
     UnregisterHotKey(Me.Handle, 1)
-    If Not ApplyHotkey() Then MsgBox("The Keyboard Shortcut ""Alt+Shift+S"" is already in use!" & vbNewLine & "Please select a different Keyboard Shortcut to use with Please Stand By...", MsgBoxStyle.Exclamation Or MsgBoxStyle.SystemModal, "Please Stand By... Keyboard Shortcut")
+    If Not ApplyHotkey() Then MsgBox("The Keyboard Shortcut ""Alt+Shift+S"" is already in use!" & vbNewLine & "Please select a different Keyboard Shortcut to use with Please Stand By...", MsgBoxStyle.Exclamation Or MsgBoxStyle.SystemModal, Application.ProductName)
     SetTrayText()
   End Sub
   Private Sub mnuShortcutASV_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles mnuShortcutASV.Click
     GetRegKey(True).SetValue("KeyboardShortcut", 8, Microsoft.Win32.RegistryValueKind.DWord)
     UnregisterHotKey(Me.Handle, 1)
-    If Not ApplyHotkey() Then MsgBox("The Keyboard Shortcut ""Alt+Shift+V"" is already in use!" & vbNewLine & "Please select a different Keyboard Shortcut to use with Please Stand By...", MsgBoxStyle.Exclamation Or MsgBoxStyle.SystemModal, "Please Stand By... Keyboard Shortcut")
+    If Not ApplyHotkey() Then MsgBox("The Keyboard Shortcut ""Alt+Shift+V"" is already in use!" & vbNewLine & "Please select a different Keyboard Shortcut to use with Please Stand By...", MsgBoxStyle.Exclamation Or MsgBoxStyle.SystemModal, Application.ProductName)
     SetTrayText()
   End Sub
   Private Sub mnuShortcutWS_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles mnuShortcutWS.Click
     GetRegKey(True).SetValue("KeyboardShortcut", 9, Microsoft.Win32.RegistryValueKind.DWord)
     UnregisterHotKey(Me.Handle, 1)
-    If Not ApplyHotkey() Then MsgBox("The Keyboard Shortcut ""Win+S"" is already in use!" & vbNewLine & "Please select a different Keyboard Shortcut to use with Please Stand By...", MsgBoxStyle.Exclamation Or MsgBoxStyle.SystemModal, "Please Stand By... Keyboard Shortcut")
+    If Not ApplyHotkey() Then MsgBox("The Keyboard Shortcut ""Win+S"" is already in use!" & vbNewLine & "Please select a different Keyboard Shortcut to use with Please Stand By...", MsgBoxStyle.Exclamation Or MsgBoxStyle.SystemModal, Application.ProductName)
     SetTrayText()
   End Sub
   Private Sub mnuShortcutWV_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles mnuShortcutWV.Click
     GetRegKey(True).SetValue("KeyboardShortcut", 10, Microsoft.Win32.RegistryValueKind.DWord)
     UnregisterHotKey(Me.Handle, 1)
-    If Not ApplyHotkey() Then MsgBox("The Keyboard Shortcut ""Win+V"" is already in use!" & vbNewLine & "Please select a different Keyboard Shortcut to use with Please Stand By...", MsgBoxStyle.Exclamation Or MsgBoxStyle.SystemModal, "Please Stand By... Keyboard Shortcut")
+    If Not ApplyHotkey() Then MsgBox("The Keyboard Shortcut ""Win+V"" is already in use!" & vbNewLine & "Please select a different Keyboard Shortcut to use with Please Stand By...", MsgBoxStyle.Exclamation Or MsgBoxStyle.SystemModal, Application.ProductName)
     SetTrayText()
   End Sub
 #End Region
