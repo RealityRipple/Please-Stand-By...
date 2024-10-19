@@ -89,6 +89,7 @@
   <ItemGroup>
     <Compile Include="ApplicationEvents.vb" />
     <Compile Include="clsAuthenticode.vb" />
+    <Compile Include="clsNativeMethods.vb" />
     <Compile Include="frmMain.vb">
       <SubType>Form</SubType>
     </Compile>

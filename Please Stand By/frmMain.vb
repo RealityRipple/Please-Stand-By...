@@ -1,23 +1,7 @@
 ﻿Imports System.Runtime.InteropServices
 Imports IWshRuntimeLibrary
+Imports Please_Stand_By.NativeMethods
 Public Class frmMain
-  <DllImport("user32", SetLastError:=True, CharSet:=CharSet.Unicode)>
-  Private Shared Function PostMessage(ByVal hWnd As IntPtr, ByVal wMsg As Integer, ByVal wParam As Integer, ByVal lParam As Integer) As Integer
-  End Function
-  <DllImport("user32", SetLastError:=True, CharSet:=CharSet.Unicode)>
-  Private Shared Function RegisterHotKey(ByVal hwnd As IntPtr, ByVal id As Integer, ByVal fsModifiers As Integer, ByVal vk As Integer) As Boolean
-  End Function
-  <DllImport("user32", SetLastError:=True, CharSet:=CharSet.Unicode)>
-  Private Shared Function UnregisterHotKey(ByVal hwnd As IntPtr, ByVal id As Integer) As Boolean
-  End Function
-  <StructLayout(LayoutKind.Sequential)>
-  Private Structure LASTINPUTINFO
-    Public cbSize As UInteger
-    Public dwTime As UInteger
-  End Structure
-  <DllImport("user32", setlasterror:=True, CharSet:=CharSet.Unicode)>
-  Private Shared Function GetLastInputInfo(ByRef inputInfo As LASTINPUTINFO) As Boolean
-  End Function
   Private Enum MOD_
     Alt = &H1
     Control = &H2
