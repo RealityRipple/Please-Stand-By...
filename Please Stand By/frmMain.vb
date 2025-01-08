@@ -151,6 +151,7 @@ Public Class frmMain
 #End Region
 #Region "Menus"
   Private Sub mnuTray_Popup(ByVal sender As System.Object, ByVal e As EventArgs) Handles mnuTray.Popup
+    mnuStartUp.Enabled = cSettings.IsInstalledIsh
     mnuStartUp.Checked = cSettings.SomeoneStartsWithWindows
     SetTrayMenus()
   End Sub
