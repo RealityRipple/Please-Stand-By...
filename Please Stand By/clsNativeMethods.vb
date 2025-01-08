@@ -17,4 +17,10 @@ Public NotInheritable Class NativeMethods
   <DllImport("user32", setlasterror:=True, CharSet:=CharSet.Unicode)>
   Public Shared Function GetLastInputInfo(ByRef inputInfo As LASTINPUTINFO) As Boolean
   End Function
+  <DllImport("kernel32", SetLastError:=True, CharSet:=CharSet.Unicode)>
+  Public Shared Function WritePrivateProfileStringW(ByVal lpApplicationName As String, ByVal lpKeyName As String, ByVal lpString As String, ByVal lpFileName As String) As Integer
+  End Function
+  <DllImport("kernel32", SetLastError:=True, CharSet:=CharSet.Unicode)>
+  Public Shared Function GetPrivateProfileStringW(ByVal lpApplicationName As String, ByVal lpKeyName As String, ByVal lpDefault As String, ByVal lpReturnedString As String, ByVal nSize As Int32, ByVal lpFileName As String) As Integer
+  End Function
 End Class
