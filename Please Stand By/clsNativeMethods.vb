@@ -14,7 +14,7 @@ Public NotInheritable Class NativeMethods
     Public cbSize As UInteger
     Public dwTime As UInteger
   End Structure
-  <DllImport("user32", setlasterror:=True, CharSet:=CharSet.Unicode)>
+  <DllImport("user32", SetLastError:=True, CharSet:=CharSet.Unicode)>
   Public Shared Function GetLastInputInfo(ByRef inputInfo As LASTINPUTINFO) As Boolean
   End Function
   <DllImport("kernel32", SetLastError:=True, CharSet:=CharSet.Unicode)>
